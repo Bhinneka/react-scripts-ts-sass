@@ -1,5 +1,5 @@
 {
-  "name": "@bhinneka/react-scripts-ts-sass",
+  "name": "react-scripts-ts-sass",
   "version": "2.15.2",
   "description": "Configuration and scripts for Create React App with support for TypeScript and Sass.",
   "repository": "bhinneka/create-react-app-typescript-sass",
