@@ -44,7 +44,8 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+// extract-text-webpack-plugin 4.0.0 expects [<hashType>:contenthash:<digestType>:<length>] https://www.npmjs.com/package/extract-text-webpack-plugin
+const cssFilename = 'static/css/[name].[contenthash:hex:8].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
