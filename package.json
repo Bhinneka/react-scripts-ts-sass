@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-ts-sass",
-  "version": "3.0.16",
+  "version": "3.0.17",
   "description": "Configuration and scripts for Create React App with support for TypeScript and Sass.",
   "repository": "bhinneka/create-react-app-typescript-sass",
   "license": "BSD-3-Clause",
@@ -53,7 +53,7 @@
     "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "0.6.2",
     "webpack": "4.47.0",
-    "webpack-dev-server": "2.9.4",
+    "webpack-dev-server": "4.15.2",
     "webpack-manifest-plugin": "3.2.0",
     "whatwg-fetch": "2.0.3"
   },
