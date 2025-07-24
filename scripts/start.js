@@ -78,7 +78,8 @@ choosePort(HOST, DEFAULT_PORT)
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    // createCompiler() params is an object for react-dev-utils 10.0.0 https://stackoverflow.com/a/55170584
+    const compiler = createCompiler({ webpack, config, appName, urls, useYarn });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
