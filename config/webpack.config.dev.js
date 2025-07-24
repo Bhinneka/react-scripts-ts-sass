@@ -20,6 +20,11 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+// Migration from webpackDevServer.config.js
+const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
+const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
+const ignoredFiles = require('react-dev-utils/ignoredFiles');
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -326,5 +331,51 @@ module.exports = {
   // cumbersome.
   performance: {
     hints: false,
+  },
+  // Migration from webpackDevServer.config.js
+  before: function(app, _server, _compiler) {
+    // This lets us open files from the runtime error overlay.
+    app.use(errorOverlayMiddleware());
+    // This service worker file is effectively a 'no-op' that will reset any
+    // previous service worker registered for the same host:port combination.
+    // We do this in development to avoid hitting the production cache if
+    // it used the same host and port.
+    // https://github.com/facebookincubator/create-react-app/issues/2272#issuecomment-302832432
+    app.use(noopServiceWorkerMiddleware());
+  },
+  // Silence WebpackDevServer's own logs since they're generally not useful.
+  // It will still show compile warnings and errors with this setting.
+  clientLogLevel: 'none',
+  disableHostCheck: process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
+  // By default WebpackDevServer serves physical files from current directory
+  // in addition to all the virtual build products that it serves from memory.
+  // This is confusing because those files won’t automatically be available in
+  // production build folder unless we copy them. However, copying the whole
+  // project directory is dangerous because we may expose sensitive files.
+  // Instead, we establish a convention that only files in `public` directory
+  // get served. Our build script will copy `public` into the `build` folder.
+  // In `index.html`, you can get URL of `public` folder with %PUBLIC_URL%:
+  // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+  // In JavaScript code, you can access it with `process.env.PUBLIC_URL`.
+  // Note that we only recommend to use `public` folder as an escape hatch
+  // for files like `favicon.ico`, `manifest.json`, and libraries that are
+  // for some reason broken when imported through Webpack. If you just want to
+  // use an image, put it in `src` and `import` it from JavaScript instead.
+  contentBase: paths.appPublic,
+  overlay: false,
+  // It is important to tell WebpackDevServer to use the same "root" path
+  // as we specified in the config. In development, we always serve from /.
+  publicPath: publicPath,
+  // WebpackDevServer is noisy by default so we emit custom message instead
+  // by listening to the compiler events with `compiler.plugin` calls above.
+  quiet: true,
+  // By default files from `contentBase` will not trigger a page reload.
+  watchContentBase: true,
+  // Reportedly, this avoids CPU overload on some systems.
+  // https://github.com/facebookincubator/create-react-app/issues/293
+  // src/node_modules is not ignored to support absolute imports
+  // https://github.com/facebookincubator/create-react-app/issues/1065
+  watchOptions: {
+    ignored: ignoredFiles(paths.appSrc),
   },
 };
