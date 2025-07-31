@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-ts-sass",
-  "version": "3.0.31",
+  "version": "3.0.32",
   "description": "Configuration and scripts for Create React App with support for TypeScript and Sass.",
   "repository": "bhinneka/create-react-app-typescript-sass",
   "license": "BSD-3-Clause",
@@ -60,10 +60,7 @@
   "devDependencies": {
     "react": "16.5.2",
     "react-dom": "16.5.2",
-    "typescript": "2.7.1"
-  },
-  "peerDependencies": {
-    "typescript": "2.x"
+    "typescript": "5.8.3"
   },
   "optionalDependencies": {
     "fsevents": "1.1.3"
