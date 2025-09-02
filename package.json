@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-ts-sass",
-  "version": "3.0.32",
+  "version": "3.0.33",
   "description": "Configuration and scripts for Create React App with support for TypeScript and Sass.",
   "repository": "bhinneka/create-react-app-typescript-sass",
   "license": "BSD-3-Clause",
@@ -51,7 +51,6 @@
     "tslint": "5.7.0",
     "tslint-config-prettier": "1.10.0",
     "tslint-react": "3.2.0",
-    "url-loader": "0.6.2",
     "webpack": "4.47.0",
     "webpack-dev-server": "4.15.2",
     "webpack-manifest-plugin": "3.2.0",
